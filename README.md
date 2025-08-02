@@ -3,14 +3,14 @@ A Trello-style kanban board built as part of MyCritters' onboarding project. Thi
 
 The project focuses on:
 
-React hooks and component design
+ 1. React hooks and component design
 
-Fully-typed GraphQL queries using Apollo Client
+ 2. Fully-typed GraphQL queries using Apollo Client
 
-Auth, database, and realtime sync with Nhost
+ 3. Auth, database, and realtime sync with Nhost
 
-Drag-and-drop cards/columns with live updates
+ 4. Drag-and-drop cards/columns with live updates
 
-Production deployment to Vercel
+ 5. Production deployment to Vercel
 
-Designed to demonstrate full-stack proficiency while building a real-world, collaborative productivity app.
+ 6. Designed to demonstrate full-stack proficiency while building a real-world, collaborative productivity app.
