@@ -1,0 +1,6 @@
+mutation UpdateCardAssignee($id: uuid!, $assignee: String) {
+  update_cards_by_pk(pk_columns: { id: $id }, _set: { assignee: $assignee }) {
+    id
+    assignee
+  }
+}

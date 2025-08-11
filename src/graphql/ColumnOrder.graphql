@@ -1,0 +1,9 @@
+mutation UpdateColumnOrder($id: uuid!, $order_index: float8!) {
+  update_columns_by_pk(
+    pk_columns: { id: $id }
+    _set: { order_index: $order_index }
+  ) {
+    id
+    order_index
+  }
+}

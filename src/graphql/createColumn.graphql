@@ -1,0 +1,9 @@
+mutation CreateColumn($board_id: uuid!, $name: String!, $order_index: float8!) {
+  insert_columns_one(
+    object: { board_id: $board_id, name: $name, order_index: $order_index }
+  ) {
+    id
+    name
+    order_index
+  }
+}

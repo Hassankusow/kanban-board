@@ -1,0 +1,22 @@
+mutation CreateCard(
+  $column_id: uuid!
+  $title: String!
+  $description: String!
+  $order_index: float8!
+  $assignee: String
+) {
+  insert_cards_one(
+    object: {
+      column_id: $column_id
+      title: $title
+      description: $description
+      order_index: $order_index
+      assignee: $assignee
+    }
+  ) {
+    id
+    title
+    description
+    order_index
+  }
+}

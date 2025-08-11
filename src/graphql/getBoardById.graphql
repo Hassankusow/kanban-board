@@ -1,0 +1,18 @@
+query GetBoardById($id: uuid!) {
+  boards_by_pk(id: $id) {
+    id
+    name
+    columns(order_by: { order_index: asc }) {
+      id
+      name
+      order_index
+      cards(order_by: { order_index: asc }) {
+        id
+        title
+        description
+        assignee # ← add this
+        order_index
+      }
+    }
+  }
+}
