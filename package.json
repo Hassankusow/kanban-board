@@ -1,5 +1,5 @@
 {
-  "name": "my_critters_project_0",
+  "name": "kanban-board",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -46,14 +46,14 @@
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   },
-  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "description": "Full-stack Trello-style Kanban board with drag-and-drop, assignees, and GraphQL — Next.js 15, Apollo, Nhost, TypeScript",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hassankusow/kanban-board.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hassan Abdi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Hassankusow/kanban-board/issues"

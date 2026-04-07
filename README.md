@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanban Board
 
-## Getting Started
+[![CI](https://github.com/Hassankusow/kanban-board/actions/workflows/ci.yml/badge.svg)](https://github.com/Hassankusow/kanban-board/actions/workflows/ci.yml)
 
-First, run the development server:
+A full-stack Trello-style Kanban board with real-time drag-and-drop, multi-assignee support, and role-based access. Built with Next.js 15, Apollo GraphQL, and Nhost (Hasura + Auth).
+
+---
+
+## Features
+
+- **Drag-and-drop** — reorder cards within and across columns using dnd-kit; drag entire columns left/right
+- **Multi-board workspace** — create, browse, and delete multiple boards from a home dashboard
+- **Assignee system** — assign team members to cards via an inline avatar picker
+- **Quick-add sidebar** — add cards to any column directly from the sidebar without opening a modal
+- **Column filtering** — focus on one column at a time via sidebar filter
+- **Color-coded columns** — each list gets a distinct header color and matching card theme
+- **Real-time GraphQL** — all mutations backed by Hasura via Apollo Client with immediate refetch
+
+---
+
+## Tech Stack
+
+**Frontend:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · shadcn/ui
+
+**Data / API:** Apollo Client · GraphQL Codegen · Hasura (via Nhost)
+
+**Drag and Drop:** dnd-kit (core + sortable + modifiers)
+
+**Auth / Backend:** Nhost (Hasura + Nhost Auth) · PostgreSQL
+
+---
+
+## Setup
 
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Fill in NEXT_PUBLIC_NHOST_SUBDOMAIN, NEXT_PUBLIC_NHOST_REGION, HASURA_ADMIN_SECRET
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── page.tsx              # Home — board list
+│   ├── boards/[id]/page.tsx  # Board view with DnD
+│   └── layout.tsx
+├── components/
+│   ├── BoardList.tsx         # Board CRUD + modal
+│   └── Sidebar.tsx           # Column filter + quick-add + assignees
+├── graphql/
+│   ├── *.graphql             # Queries and mutations
+│   └── generated/            # Auto-generated TypeScript types
+├── lib/
+│   ├── apollo.ts             # Apollo client setup
+│   └── nhost.ts              # Nhost client
+└── data/
+    └── assignees.ts          # Assignee roster
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Hassan Abdi**
+[GitHub](https://github.com/Hassankusow) · [LinkedIn](https://linkedin.com/in/hassan-abdi-119357267)
