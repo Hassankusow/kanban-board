@@ -3,7 +3,8 @@
 import Sidebar from "@/components/Sidebar";
 import { ASSIGNEES } from "@/data/assignees";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   useGetBoardByIdQuery,
   GetBoardByIdQuery,
@@ -139,6 +140,15 @@ function CardItem({
   };
   const avatar = avatarFor(card.assignee);
   const [assigneeOpen, setAssigneeOpen] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [dropPos, setDropPos] = useState({ top: 0, left: 0 });
+
+  useEffect(() => {
+    if (assigneeOpen && btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      setDropPos({ top: r.bottom + window.scrollY + 4, left: r.left + window.scrollX });
+    }
+  }, [assigneeOpen]);
 
   return (
     <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
@@ -157,8 +167,9 @@ function CardItem({
             )}
 
             {/* Avatar + quick assign menu */}
-            <div className="mt-2 relative">
+            <div className="mt-2">
               <button
+                ref={btnRef}
                 onClick={(e) => { e.stopPropagation(); setAssigneeOpen(o => !o); }}
                 className="inline-flex items-center gap-2 cursor-pointer"
               >
@@ -172,10 +183,13 @@ function CardItem({
                 </span>
               </button>
 
-              {assigneeOpen && (
+              {assigneeOpen && typeof window !== "undefined" && createPortal(
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setAssigneeOpen(false)} />
-                  <div className="absolute left-0 top-full mt-1 z-50 rounded-md border border-black/30 bg-slate-900 shadow-xl p-2 flex flex-col gap-1 min-w-[160px]">
+                  <div
+                    className="absolute z-50 rounded-md border border-black/30 bg-slate-900 shadow-xl p-2 flex flex-col gap-1 min-w-[160px]"
+                    style={{ top: dropPos.top, left: dropPos.left }}
+                  >
                     <button
                       onClick={async () => { await onSetAssignee(card.id, null); setAssigneeOpen(false); }}
                       className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-white/10 text-slate-200"
@@ -194,7 +208,8 @@ function CardItem({
                       </button>
                     ))}
                   </div>
-                </>
+                </>,
+                document.body
               )}
             </div>
           </div>
@@ -225,7 +240,7 @@ function DroppableColumn({
     data: { type: "column-droppable", columnId },
   });
   return (
-    <ul ref={setNodeRef} className="p-3 space-y-3 min-h-[12px]">
+    <ul ref={setNodeRef} className="p-3 space-y-3 min-h-[300px]">
       {children}
     </ul>
   );
