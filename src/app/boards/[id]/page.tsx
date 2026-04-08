@@ -156,7 +156,7 @@ function CardItem({
             )}
 
             {/* Avatar + quick assign menu */}
-            <details className="mt-2 group relative">
+            <details className="mt-2 group relative" style={{ isolation: "isolate" }}>
               <summary className="list-none flex items-center gap-2 cursor-pointer">
                 <span className="inline-flex items-center gap-2">
                   {avatar ? (
