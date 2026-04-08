@@ -179,7 +179,7 @@ function CardItem({
               </summary>
 
               {/* menu */}
-              <div className="absolute z-20 mt-2 rounded-md border border-black/30 bg-black/60 backdrop-blur p-2 flex flex-col gap-1">
+              <div className="absolute z-50 mt-2 rounded-md border border-black/30 bg-slate-900 shadow-xl p-2 flex flex-col gap-1 min-w-[160px]">
                 <button
                   onClick={async () => {
                     await onSetAssignee(card.id, null);
@@ -502,7 +502,7 @@ export default function BoardPage() {
 
                   return (
                     <SortableColumnShell key={col.id} id={col.id}>
-                      <div className="rounded-xl border border-slate-800 bg-slate-900">
+                      <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-visible">
                         <div
                           className={`flex items-center justify-between rounded-t-xl px-3 py-2 ${header} text-white`}
                         >
