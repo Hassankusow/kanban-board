@@ -8,7 +8,7 @@ import {
   useCreateBoardMutation,
   useDeleteBoardMutation,
 } from "@/graphql/generated";
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export default function BoardList() {
   const router = useRouter();
@@ -18,9 +18,11 @@ export default function BoardList() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [boardName, setBoardName] = useState("");
+  const [createError, setCreateError] = useState("");
 
   const handleCreateBoard = async () => {
     if (!boardName.trim()) return;
+    setCreateError("");
     try {
       const result = await createBoard({ variables: { name: boardName.trim() } });
       const newId = result.data?.insert_boards_one?.id;
@@ -33,6 +35,7 @@ export default function BoardList() {
       }
     } catch (err) {
       console.error("Error creating board:", err);
+      setCreateError("Failed to create board. Check your connection.");
     }
   };
 
@@ -89,10 +92,10 @@ export default function BoardList() {
         <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="mx-auto w-full max-w-sm rounded bg-white p-6 shadow">
-            <Dialog.Title className="text-lg font-medium mb-2">
+          <DialogPanel className="mx-auto w-full max-w-sm rounded bg-white p-6 shadow">
+            <DialogTitle className="text-lg font-medium mb-2">
               Create a new board
-            </Dialog.Title>
+            </DialogTitle>
 
             <input
               autoFocus
@@ -121,7 +124,8 @@ export default function BoardList() {
                 Create
               </button>
             </div>
-          </Dialog.Panel>
+            {createError && <p className="mt-3 text-sm text-red-500">{createError}</p>}
+          </DialogPanel>
         </div>
       </Dialog>
     </>
