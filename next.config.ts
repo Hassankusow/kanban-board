@@ -1,10 +1,8 @@
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
+// @ts-check
+const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
 };
 
 export default nextConfig;
-
