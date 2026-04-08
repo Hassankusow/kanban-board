@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   useGetBoardsQuery,
@@ -10,6 +11,7 @@ import {
 import { Dialog } from "@headlessui/react";
 
 export default function BoardList() {
+  const router = useRouter();
   const { data, loading, error, refetch } = useGetBoardsQuery();
   const [createBoard] = useCreateBoardMutation();
   const [deleteBoard] = useDeleteBoardMutation();
@@ -20,10 +22,15 @@ export default function BoardList() {
   const handleCreateBoard = async () => {
     if (!boardName.trim()) return;
     try {
-      await createBoard({ variables: { name: boardName.trim() } });
+      const result = await createBoard({ variables: { name: boardName.trim() } });
+      const newId = result.data?.insert_boards_one?.id;
       setBoardName("");
       setIsOpen(false);
-      await refetch();
+      if (newId) {
+        router.push(`/boards/${newId}`);
+      } else {
+        await refetch();
+      }
     } catch (err) {
       console.error("Error creating board:", err);
     }
