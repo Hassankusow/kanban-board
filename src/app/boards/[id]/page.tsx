@@ -138,6 +138,7 @@ function CardItem({
     cursor: "grab",
   };
   const avatar = avatarFor(card.assignee);
+  const [assigneeOpen, setAssigneeOpen] = useState(false);
 
   return (
     <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
@@ -147,7 +148,7 @@ function CardItem({
         } transition`}
       >
         <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="font-medium truncate">{card.title}</div>
             {card.description && (
               <div className="mt-1 text-sm/5 opacity-90 break-words">
@@ -156,61 +157,46 @@ function CardItem({
             )}
 
             {/* Avatar + quick assign menu */}
-            <details className="mt-2 group relative" style={{ isolation: "isolate" }}>
-              <summary className="list-none flex items-center gap-2 cursor-pointer">
-                <span className="inline-flex items-center gap-2">
-                  {avatar ? (
-                    <img
-                      src={avatar}
-                      alt={card.assignee ?? ""}
-                      className="h-6 w-6 rounded-full object-cover"
-                    />
-                  ) : (
-                    <span className="h-6 w-6 rounded-full bg-black/20 grid place-items-center">
-                      –
-                    </span>
-                  )}
-                  <span
-                    className={`text-[11px] px-2 py-0.5 rounded border ${theme.pill}`}
-                  >
-                    {card.assignee ?? "Unassigned"}
-                  </span>
+            <div className="mt-2 relative">
+              <button
+                onClick={(e) => { e.stopPropagation(); setAssigneeOpen(o => !o); }}
+                className="inline-flex items-center gap-2 cursor-pointer"
+              >
+                {avatar ? (
+                  <img src={avatar} alt={card.assignee ?? ""} className="h-6 w-6 rounded-full object-cover" />
+                ) : (
+                  <span className="h-6 w-6 rounded-full bg-black/20 grid place-items-center">–</span>
+                )}
+                <span className={`text-[11px] px-2 py-0.5 rounded border ${theme.pill}`}>
+                  {card.assignee ?? "Unassigned"}
                 </span>
-              </summary>
+              </button>
 
-              {/* menu */}
-              <div className="absolute z-50 mt-2 rounded-md border border-black/30 bg-slate-900 shadow-xl p-2 flex flex-col gap-1 min-w-[160px]">
-                <button
-                  onClick={async () => {
-                    await onSetAssignee(card.id, null);
-                    (document.activeElement as HTMLElement | null)?.blur();
-                  }}
-                  className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-white/10"
-                >
-                  <span className="h-5 w-5 rounded-full bg-white/10 grid place-items-center">
-                    –
-                  </span>
-                  Unassigned
-                </button>
-                {ASSIGNEES.map((a) => (
-                  <button
-                    key={a.name}
-                    onClick={async () => {
-                      await onSetAssignee(card.id, a.name);
-                      (document.activeElement as HTMLElement | null)?.blur();
-                    }}
-                    className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-white/10"
-                  >
-                    <img
-                      src={a.avatar}
-                      alt={a.name}
-                      className="h-5 w-5 rounded-full object-cover"
-                    />
-                    {a.name}
-                  </button>
-                ))}
-              </div>
-            </details>
+              {assigneeOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setAssigneeOpen(false)} />
+                  <div className="absolute left-0 top-full mt-1 z-50 rounded-md border border-black/30 bg-slate-900 shadow-xl p-2 flex flex-col gap-1 min-w-[160px]">
+                    <button
+                      onClick={async () => { await onSetAssignee(card.id, null); setAssigneeOpen(false); }}
+                      className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-white/10 text-slate-200"
+                    >
+                      <span className="h-5 w-5 rounded-full bg-white/10 grid place-items-center">–</span>
+                      Unassigned
+                    </button>
+                    {ASSIGNEES.map((a) => (
+                      <button
+                        key={a.name}
+                        onClick={async () => { await onSetAssignee(card.id, a.name); setAssigneeOpen(false); }}
+                        className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-white/10 text-slate-200"
+                      >
+                        <img src={a.avatar} alt={a.name} className="h-5 w-5 rounded-full object-cover" />
+                        {a.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           <button
