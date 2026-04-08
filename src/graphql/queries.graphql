@@ -2,15 +2,5 @@ query GetBoards {
   boards {
     id
     name
-    columns {
-      id
-      name
-      order_index
-      cards {
-        id
-        content
-        order_index
-      }
-    }
   }
 }
