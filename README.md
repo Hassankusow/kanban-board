@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Hassankusow/kanban-board/actions/workflows/ci.yml/badge.svg)](https://github.com/Hassankusow/kanban-board/actions/workflows/ci.yml)
 
+**Live:** [kanban-board-orpin-iota.vercel.app](https://kanban-board-orpin-iota.vercel.app)
+
 A full-stack Trello-style Kanban board with real-time drag-and-drop, multi-assignee support, and role-based access. Built with Next.js 15, Apollo GraphQL, and Nhost (Hasura + Auth).
 
 ---

@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MyCritters Onboarding",
-  description: "Kanban board demo app",
+  title: "Kanban Board — Drag & Drop Project Manager",
+  description: "Full-stack Kanban board with drag-and-drop, assignees, and real-time GraphQL.",
 };
 
 export default function RootLayout({
